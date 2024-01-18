@@ -16,7 +16,6 @@ function setNewWord() {
   const w = generate().toString()
   word = w.replace(/[^a-zA-Z]/g, '').toLowerCase();
   console.log('New word is: ' + word);
-  bot.telegram.sendMessage(chatId, 'I\'ve got a new word! Try to guess it! The first letter is ' + word[0]);
 }
 
 // on message
@@ -52,11 +51,8 @@ bot.on('message', (ctx) => {
   }
 });
 
-(async () => {
-  await bot.launch();
-  console.log('Bot started');
-  setNewWord();
-})();
+setNewWord();
+bot.launch()
 
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
