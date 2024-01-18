@@ -10,6 +10,7 @@ let wordUsers = [];
 
 const chatId = process.env.CHAT_ID || '';
 const bot = new Telegraf(process.env.BOT_TOKEN)
+const canUserSaySeveralChars = process.env.CAN_USER_SAY_SEVERAL_CHARS === 'true';
 
 function setNewWord() {
   const w = generate().toString()
@@ -25,7 +26,7 @@ bot.on('message', (ctx) => {
     console.log('Message from unknown chat ' + fromChatId.toString());
     return;
   }
-  if (wordUsers.includes(fromId)) {
+  if (wordUsers.includes(fromId) && !canUserSaySeveralChars) {
     // user already said the word, delete message
     ctx.deleteMessage();
     return;
