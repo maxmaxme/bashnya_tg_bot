@@ -22,6 +22,10 @@ function setNewWord() {
 bot.on('message', (ctx) => {
   const fromId = ctx.message.from.id;
   const fromChatId = ctx.message.chat.id;
+  const text = ctx.message.text;
+  if (!text) {
+    return;
+  }
   if (fromChatId.toString() !== chatId) {
     console.log('Message from unknown chat ' + fromChatId.toString());
     return;
@@ -31,7 +35,7 @@ bot.on('message', (ctx) => {
     ctx.deleteMessage();
     return;
   }
-  if (ctx.message.text.toLowerCase() !== word[currentChar]) {
+  if (text.toLowerCase() !== word[currentChar]) {
     ctx.reply(`No no no :) ${currentChar > 0 ? 'Try again!' : ''}`);
     wordUsers = [];
     currentChar = 0;
